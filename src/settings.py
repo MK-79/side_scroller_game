@@ -1,0 +1,38 @@
+import pygame
+
+# 画面サイズ
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 400
+
+# 色の定義
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+
+# ゲーム設定
+FPS = 60
+INITIAL_SCROLL_SPEED = 5
+GROUND_Y = SCREEN_HEIGHT - 90
+SPAWN_MIN_MS = 200  # 出現間隔の最小値 (ミリ秒)
+SPAWN_MAX_MS = 1500  # 出現間隔の最大値 (ミリ秒)
+
+# プレイヤー設定
+PLAYER_WIDTH = 50
+PLAYER_HEIGHT = 50
+PLAYER_COLOR = BLUE
+PLAYER_START_X = 100
+PLAYER_START_Y = SCREEN_HEIGHT - PLAYER_HEIGHT - 20
+GRAVITY = 0.8
+JUMP_STRENGTH = -18
+SMALL_JUMP = -12
+
+# 障害物設定
+OBSTACLE_WIDTH = 30
+OBSTACLE_HEIGHT = 50
+OBSTACLE_COLOR = RED
+OBSTACLE_SPAWN_RATE = 1500  # ミリ秒単位
+# src/settings.py の既存コードの下に追記
+
+# アニメーション設定
+ANIMATION_COOLDOWN = 100  # 画像を切り替える間隔（ミリ秒）
