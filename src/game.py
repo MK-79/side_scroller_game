@@ -1,6 +1,6 @@
 import pygame
 import os
-import random  # ランダムを使うために追加
+import random
 from .settings import *
 from .player import Player
 from .obstacle import Obstacle
@@ -20,7 +20,6 @@ class Game:
     self.player = Player()
     self.all_sprites.add(self.player)
 
-    # 【変更】固定タイマーを廃止し、手動のカウントダウン変数を作成
     self.spawn_timer = random.randint(SPAWN_MIN_MS, SPAWN_MAX_MS)
 
     bg_path = os.path.join('assets', 'images', 'background.png')
@@ -33,7 +32,6 @@ class Game:
 
     self.bg_x = 0
     self.score = 0
-    # 現在のスピードを保持する変数
     self.current_speed = INITIAL_SCROLL_SPEED
 
   def handle_events(self):
@@ -48,40 +46,32 @@ class Game:
             if event.key == pygame.K_SPACE:
               self.player.jump(is_small=False)
 
-          # 小ジャンプ：左コントロールキーのみ
+          # 小ジャンプ：左コントロールキー
             elif event.key == pygame.K_LCTRL:
               self.player.jump(is_small=True)
 
       else:
-        # ゲームオーバー時のリスタート（スペースかCtrlどちらでもOKに設定）
         if event.type == pygame.KEYDOWN:
           if event.key == pygame.K_SPACE or event.key == pygame.K_LCTRL:
             self.__init__()
 
   def update(self):
     if not self.game_over:
-      # --- スピードの計算 ---
-      # 500スコアごとにスピードを1上昇させる（無限）
+
       self.current_speed = INITIAL_SCROLL_SPEED + (self.score // 500)
 
-      # --- プレイヤーの更新 ---
       self.player.update()
 
-      # --- 障害物の更新（現在のスピードを渡す） ---
       for obstacle in self.obstacles:
         obstacle.update(self.current_speed)
 
-      # --- 障害物のランダム生成ロジック ---
-      # 前のフレームからの経過時間（ミリ秒）を引いていく
       self.spawn_timer -= self.clock.get_time()
       if self.spawn_timer <= 0:
         new_obstacle = Obstacle()
         self.all_sprites.add(new_obstacle)
         self.obstacles.add(new_obstacle)
-        # 次の出現までの時間をランダムに再設定
         self.spawn_timer = random.randint(SPAWN_MIN_MS, SPAWN_MAX_MS)
 
-      # --- 背景のスクロール（現在のスピードを使用） ---
       self.bg_x -= self.current_speed
       if self.bg_x <= -SCREEN_WIDTH:
         self.bg_x = 0
@@ -99,13 +89,11 @@ class Game:
     else:
       self.screen.fill(WHITE)
 
-    # self.all_sprites.draw(self.screen) だと update を引数付きで呼べないため
-    # 描画だけをここで行う
     for sprite in self.all_sprites:
       self.screen.blit(sprite.image, sprite.rect)
 
     font = pygame.font.Font(None, 36)
-    # 現在の速度も表示すると分かりやすいです
+
     score_text = font.render(
         f"Score: {self.score}  Speed: {self.current_speed}", True, BLACK)
     self.screen.blit(score_text, (10, 10))
@@ -124,6 +112,5 @@ class Game:
       self.handle_events()
       self.update()
       self.draw()
-      # clock.tick は設定ファイルの FPS に合わせる
       self.clock.tick(FPS)
     pygame.quit()

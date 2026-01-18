@@ -15,19 +15,12 @@ class Player(pygame.sprite.Sprite):
       sprite_sheet = pygame.image.load(sheet_path).convert()
       sprite_sheet.set_colorkey(WHITE)
 
-      # --- 【ここがポイント：自動計算】 ---
-      # 読み込んだ画像の実際のサイズを取得します
       sheet_width, sheet_height = sprite_sheet.get_size()
 
-      # 画像を4列4行として、1コマのサイズを計算します
       frame_w = sheet_width // 4
       frame_h = sheet_height // 4
-      # ----------------------------------
 
-      # 右向きのアニメーションは「上から2行目」を使います
-      # y座標は frame_h * 1 から開始
       for i in range(4):
-        # 自動計算した frame_w, frame_h を使って切り出し
         frame = sprite_sheet.subsurface(
             (i * frame_w, frame_h * 3, frame_w, frame_h))
         scaled_frame = pygame.transform.scale(
@@ -50,9 +43,9 @@ class Player(pygame.sprite.Sprite):
     if not self.is_jumping:
 
       if is_small:
-        self.velocity_y = SMALL_JUMP  # -12
+        self.velocity_y = SMALL_JUMP  # 小ジャンプ
       else:
-        self.velocity_y = -18  # 通常の高さ
+        self.velocity_y = -18  # 　通常ジャンプ
       self.is_jumping = True
 
   def update_animation(self):
