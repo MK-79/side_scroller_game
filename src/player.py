@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
       if is_small:
         self.velocity_y = SMALL_JUMP  # 小ジャンプ
       else:
-        self.velocity_y = -18  # 　通常ジャンプ
+        self.velocity_y = -18  # 通常ジャンプ
       self.is_jumping = True
 
   def update_animation(self):

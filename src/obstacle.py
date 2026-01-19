@@ -19,7 +19,7 @@ class Obstacle(pygame.sprite.Sprite):
       self.image = pygame.Surface((OBSTACLE_WIDTH, height))
       self.image.fill(OBSTACLE_COLOR)
 
-    self.rect = self.image.get_rect()
+    self.rect = self.image.get_rect()  # 当たり判定
     self.rect.inflate_ip(-20, -20)
     self.rect.x = SCREEN_WIDTH
     self.rect.bottom = GROUND_Y

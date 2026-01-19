@@ -76,7 +76,6 @@ class Game:
       if self.bg_x <= -SCREEN_WIDTH:
         self.bg_x = 0
 
-      # 衝突判定
       if pygame.sprite.spritecollideany(self.player, self.obstacles):
         self.game_over = True
 
